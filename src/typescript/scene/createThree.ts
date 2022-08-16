@@ -1,4 +1,4 @@
-import { Scene, PerspectiveCamera, AmbientLight,PointLight,Vector2, WebGLRenderer, Color, Object3D, ReinhardToneMapping, AxesHelper, BoxGeometry, MeshBasicMaterial, Mesh } from 'three'
+import { Scene, PerspectiveCamera, AmbientLight,PointLight,Vector2, WebGLRenderer, Color, Object3D, ReinhardToneMapping, AxesHelper, BoxGeometry, MeshBasicMaterial, Mesh, Group } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer";
 
@@ -10,6 +10,7 @@ export let renderer = null
 export let camera = null
 export let controls = null
 export let css2drenderer = null
+export let mapGroup = new Group()
 
 export const create = (dom) => {
     tDom = dom
@@ -27,12 +28,13 @@ export const create = (dom) => {
 
 const createScene = () => {
     scene = new Scene()
-    scene.background = new Color('#ffefb9')
+    scene.background = new Color('#071832')
+    scene.add(mapGroup)
 }
 const createCamera = () => {
     camera = new PerspectiveCamera(45, width / height, 1, 10000)
-    camera.position.z = 400;
-    camera.position.y = -300;
+    camera.position.z = 100;
+    // camera.position.y = -300;
     if (scene) scene.add(camera)
 }
 const createRender = () => {
@@ -66,7 +68,7 @@ const createControls = () => {
         controls = new OrbitControls(camera, renderer?.domElement);
     if (controls) {
         controls.addEventListener('change', (e) => {
-            console.log(camera?.position);
+            // console.log(camera?.position);
         })
     }
 }

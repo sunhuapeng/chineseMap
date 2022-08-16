@@ -1,35 +1,32 @@
-import { create,scene } from './scene/createThree'
+import { create, scene } from './scene/createThree'
 import { objLoad } from './scene/loading'
 import * as THREE from 'three'
+import {renderMap} from './scene/renderMap'
+import {getAdCode} from './request/index'
 
 const init = async function () {
     const body = document.querySelector('body')
-    let city
-    const getCity = async function () {
-        city = await objLoad('./static/model/obj/city.obj')
-    }
+
     if (body) {
         create(body);
-        await getCity();
-        console.log(city);
-        city.traverse((mesh:any)=>{
-            console.log('mesh',mesh);
-            if(mesh.isMesh) {
-                mesh.material = new THREE.MeshLambertMaterial({
-                    color: 0xffee33,
-                    side: THREE.DoubleSide//两面可见
-                })
-                
-            }
-            
-        })
-        scene&&scene.add(city)
+        
+        // 获取城市编码
+        const adCode = await getAdCode();
+        // 将城市编码挂载到window
+        (window as any).AD_CODe = adCode
+        renderMap(100000)
     }
 
 }
 
-init()
+// init()
 
-
+const btn:any = document.querySelector('#btn')
+if(btn) {
+    btn.onclick = ()=>{
+        renderMap(100000)
+        
+    }
+}
 
 
