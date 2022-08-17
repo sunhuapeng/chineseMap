@@ -33,7 +33,7 @@ function interval(shapeArr) {
         if (index === shapeArr.length - 1) {
             clearInterval(time);
         }
-        let geoPlane = new THREE.ShapeGeometry(shape);
+        let geoPlane = new THREE.ShapeBufferGeometry(shape);
 
         const { count, itemSize, array } = geoPlane.attributes.position
         const points = []
@@ -41,7 +41,6 @@ function interval(shapeArr) {
             const v3 = new THREE.Vector3(array[i * itemSize], array[i * itemSize + 1], array[i * itemSize + 2])
             points.push(v3)
         }
-
         setLine(points);
         index++;
     });
@@ -74,10 +73,10 @@ function setFlyLine(points) {
     var flyMesh = _Fly.addFly({
         color: getRandomColor(),
         curve: points,
-        width: 100,
-        length: 100,
-        speed: 200,
-        // repeat: Infinity
+        width: 20,
+        length: 200,
+        speed: 2,
+        repeat: Infinity
     } as any);
     lineGroup.rotation.set(Math.PI * 0.5, 0, 0);
     lineGroup.position.setY(2)

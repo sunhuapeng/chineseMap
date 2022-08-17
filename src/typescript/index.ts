@@ -7,7 +7,7 @@ import { createFloor, initReflector } from './scene/createMesh'
 import { handleFlyLine } from './scene/createFly'
 const init = async function () {
     const mapDom = document.querySelector('#map')
-    let dalian: Mesh | null = null
+    let dalian: any | null = null
 
     if (mapDom) {
         create(mapDom);
@@ -61,7 +61,7 @@ const init = async function () {
     // 处理山峰
     function handleMountain(obj: Group) {
         if (obj) {
-            const mesh = obj.children[0]
+            const mesh:any = obj.children[0]
             // const mesh2 = mesh.clone()
 
             mesh.position.set(-670, 4, -890)

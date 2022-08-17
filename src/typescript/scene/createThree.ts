@@ -1,7 +1,7 @@
 import { Scene, PerspectiveCamera, Fog, AmbientLight, PointLight, Vector2, WebGLRenderer, Color, Object3D, ReinhardToneMapping, AxesHelper, BoxGeometry, MeshBasicMaterial, Mesh, Group } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer";
-import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js';
+import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
 import { Sky } from 'three/examples/jsm/objects/Sky.js';
 import * as THREE from 'three'
 import initFly from '../../assets/js/fly'
@@ -196,7 +196,7 @@ const guiUtil = () => {
     gui.add(params, 'scaleX', -10, 10);
     gui.add(params, 'scaleY', -10, 10);
     gui.add(params, 'scaleZ', -10, 10);
-    gui.open();
+    gui.close();
 }
 
 const render = () => {
