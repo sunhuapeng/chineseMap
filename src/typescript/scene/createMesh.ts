@@ -1,19 +1,20 @@
 import * as THREE from 'three'
-/**
- * @param {*} mesh 基础模型
- * @param {*} opacity 线透明度
- * @param {*} color  线颜色
- * @param {*} count 分段数
- * @returns 
- */
- export const ReturnLine = (mesh:any, opacity:number, color:string, count?:number) => {
-    if (mesh.isMesh) {
-        var edges = new THREE.EdgesGeometry(mesh.geometry, count ? count : 10);
-        var line = new THREE.LineSegments(edges);
-        (line.material as THREE.LineBasicMaterial).color = new THREE.Color(color);
-        (line.material as THREE.LineBasicMaterial).opacity = opacity;
-        (line.material as THREE.LineBasicMaterial).transparent = true;
-        (line.material as THREE.LineBasicMaterial).side = THREE.DoubleSide
-        return line;
-    }
+import { floor } from './material'
+import { Reflector } from 'three/examples/jsm/objects/Reflector.js';
+export const createFloor = () => {
+    const geometry = new THREE.PlaneGeometry(10000, 10000);
+    const material = floor
+    return new THREE.Mesh(geometry, material);
 }
+
+export function initReflector() {
+    // 反光面
+    let reflector = new Reflector(new THREE.PlaneGeometry(2000, 2000), {
+      textureWidth: window.innerWidth * window.devicePixelRatio,
+      textureHeight: window.innerHeight * window.devicePixelRatio,
+      color: 0x6e91aa
+    });
+    reflector.position.y = 1.35;
+    reflector.rotation.x = -0.5 * Math.PI
+    return reflector
+  }
