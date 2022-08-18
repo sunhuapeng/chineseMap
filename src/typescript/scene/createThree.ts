@@ -26,6 +26,7 @@ let thatMesh = null
 export let _Fly = new initFly({});
 let clock = new THREE.Clock();
 
+const runCameraPosition = new THREE.Vector3(771, 215, 380)
 const params = {
     positionX: 0,
     positionY: 0,
@@ -81,6 +82,7 @@ const createCamera = () => {
     // camera = new THREE.OrthographicCamera( width / - 2, width / 2, height / 2, height / - 2, -20000, 20000 );
     // camera.position.set(458, 215, 380)
     camera.position.set(777, 321, -728)
+    // camera.position.set(0, 5000, 0)
     if (scene) scene.add(camera)
 }
 
@@ -124,7 +126,7 @@ const createControls = () => {
         controls = new OrbitControls(camera, renderer?.domElement);
     if (controls) {
         controls.addEventListener('change', (e) => {
-            // console.log(camera?.position);
+            console.log(camera?.position);
         })
     }
 }
@@ -203,11 +205,11 @@ const render = () => {
     animate();
     css2drenderer.render(scene, camera);
     renderer.render(scene, camera);
-    if (thatMesh) {
-        const { positionX, positionY, positionZ, scaleX, scaleY, scaleZ } = params
-        // thatMesh.position.set(positionX, positionY, positionZ)
-        // thatMesh.scale.set(scaleX, scaleY, scaleZ)
-    }
+    // if (thatMesh) {
+    //     const { positionX, positionY, positionZ, scaleX, scaleY, scaleZ } = params
+    //     thatMesh.position.set(positionX, positionY, positionZ)
+    //     thatMesh.scale.set(scaleX, scaleY, scaleZ)
+    // }
     // 更新动画
     TWEEN.update();
     // 更新飞线
@@ -231,7 +233,7 @@ const handleEVent = (e: any) => {
         console.log('keydown', e);
         if (key === 'a') {
             console.log('动画', camera.position);
-            const newCameraPosition = new THREE.Vector3(458, 215, 380);
+            const newCameraPosition = runCameraPosition;
             new TWEEN.Tween(camera.position).to(newCameraPosition, 5000).start();
         }
     }
@@ -248,14 +250,19 @@ const handleClick = (event: any) => {
     // 第二个参数设置为false，不检测后代，否则会误检到装饰线
     const rayMesh = raycaster.intersectObjects(mountainGroup.children, false);
 
+    console.log(rayMesh);
     if (rayMesh.length !== 0) {
         // 模型在object字段里
         if (rayMesh[0].object) {
+            
             thatMesh = rayMesh[0].object
 
             params.positionX = thatMesh.position.x
             params.positionY = thatMesh.position.y
             params.positionZ = thatMesh.position.z
+            params.scaleZ = thatMesh.scale.z
+            params.scaleX = thatMesh.scale.x
+            params.scaleY = thatMesh.scale.y
         }
     }
 }
